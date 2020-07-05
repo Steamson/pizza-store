@@ -1,0 +1,82 @@
+import axios from 'axios'
+
+export default {
+    state: {
+        user: {},
+    },
+    mutations: {
+        loginUser(state, user) {
+            state.user = user;
+        },
+
+        logOutUser(state,) {
+            state.user = {};
+        },
+    },
+    actions: {
+        ChangeMainCurrency({commit}, currency) {
+            commit('changeMainCurrency', currency)
+        },
+
+        async LoginUser({commit, state}, alias) {
+            state.preloader = true
+
+            return await axios('https://pizzastore-e062.restdb.io/rest/accounts', {
+                method: 'GET',
+                headers: {
+                    'cache-control': 'no-cache',
+                    'x-apikey': '5f01474ea529a1752c476d7f',
+                },
+            }).then((response) => {
+                state.preloader = false
+                
+                if (response.data.length) {
+                    let temp_user
+
+                    for (let user of response.data) {
+                        if (user.alias == alias) {
+                            temp_user = user
+                        }
+                    }
+
+                    if (temp_user) {
+                        commit('loginUser', temp_user)
+                    }
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+
+        LogOutUser({commit}) {
+            commit('logOutUser')
+        },
+
+        async CreateUser({commit}, params) {
+            return await axios('https://pizzastore-e062.restdb.io/rest/accounts', {
+                method: 'POST',
+                headers: {
+                    'cache-control': 'no-cache',
+                    'x-apikey': '5f01474ea529a1752c476d7f',
+                    'content-type': 'application/json'
+                },
+                data: {
+                    phone: params.phone,
+                    user_name: params.name,
+                    address: params.address,
+                    alias: Math.random().toString(36).substr(2, 9),
+                },
+                json: true
+            }).then((response) => {
+                commit('loginUser', response.data)
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+    },
+    getters: {
+        UserGet: state => {
+            return state.user
+        },
+    }
+}

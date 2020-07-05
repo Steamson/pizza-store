@@ -1,6 +1,6 @@
 <template>
     <div class="cart">
-        <router-link :to="{name: 'home'}">Back to home</router-link>
+        <!-- <router-link :to="{name: 'home'}">Back to home</router-link> -->
 
         <h1 class="mb-3">CART</h1>
 
@@ -24,7 +24,7 @@
             <b-button variant="success">Make order</b-button>
         </div>
 
-        <div>
+        <div v-if="cart_data.length">
             <Order></Order>
         </div>
     </div>
@@ -53,7 +53,7 @@
                     let result = []
 
                     for (let item of this.cart_data) {
-                        result.push(item.price * item.quantity)
+                        result.push(item.price_usd * item.quantity)
                     }
 
                     result = result.reduce(function(sum, el) {

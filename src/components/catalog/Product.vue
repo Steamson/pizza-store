@@ -1,20 +1,27 @@
 <template>
     <div class="product">
-        <b-card tag="div" bg-variant="dark" :header="params.name" class="text-center my-3" text-variant="white">
-            <!-- <b-card-title>{{params.article}}</b-card-title> -->
-            <b-card-text>Price: {{params.price.toFixed(2)}}</b-card-text>
+        <b-card
+            tag="div"
+            bg-variant="dark"
+            :header="params.name"
+            class="text-center my-3"
+            text-variant="white"
+            img-top
+            :img-src="'https://pizzastore-e062.restdb.io/media/' + params.image[0] + '?s=w'"
+        >
+            <b-card-text>{{params.description}}</b-card-text>
+            <b-card-title>Price: {{params['price_' + currency.toLowerCase()].toFixed(2)}}{{symbol}}</b-card-title>
             <b-button href="#" variant="primary" @click="addToCart">Add to cart</b-button>
         </b-card>
     </div>
 </template>
 
 <script>
-// If I want to add Image from assets I need to use:
-// :src=" require('../assets/images/' + params.image) "
-
     export default {
         name: 'Product',
         props: {
+            symbol: '',
+            currency: '',
             params: {
                 type: Object,
                 default() {return {}}
@@ -27,6 +34,12 @@
             addToCart() {
                 this.$emit('addToCart', this.params)
             },
+        },
+        computed: {
+            // currencyComputed() {
+                
+            //     return  
+            // }
         },
     }
 </script>

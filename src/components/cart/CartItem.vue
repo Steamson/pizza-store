@@ -2,7 +2,7 @@
     <div class="cart_item d-flex align-items-center">
         <div class="d-flex align-items-center w-100 flex-grow-1">
             <h3 class="mb-0 mr-3">{{item.name}}</h3>
-            <span>{{item.price.toFixed(2)}}</span>
+            <span>{{item.price_usd.toFixed(2)}}</span>
         </div>
         <div class="d-flex align-items-center">
             <b-button variant="outline-primary" @click="decrease">-</b-button>

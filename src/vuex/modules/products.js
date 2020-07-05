@@ -11,8 +11,12 @@ export default {
     },
     actions: {
         GetProductsFromApi({commit}) {
-            axios('http://localhost:4000/products', {
-                method: "GET",
+            axios('https://pizzastore-e062.restdb.io/rest/products', {
+                method: 'GET',
+                headers: {
+                    'cache-control': 'no-cache',
+                    'x-apikey': '5f01474ea529a1752c476d7f',
+                },
             }).then((response) => {
                 commit('updateProducts', response.data)
                 return response
@@ -23,7 +27,7 @@ export default {
         },
     },
     getters: {
-        ProductsGet(state) {
+        ProductsGet: state => {
             return state.products
         },
     }
