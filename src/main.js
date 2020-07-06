@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import './assets/styles/styles.scss'
 
 Vue.use(BootstrapVue)
+Vue.use(require('vue-moment'))
 Vue.config.productionTip = false
 
 new Vue({

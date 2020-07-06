@@ -15,7 +15,7 @@
             </b-form-group>
 
             <div class="d-flex justify-content-between">
-                <b-button type="reset" variant="danger">Reset</b-button>
+                <b-button @click="returnBack" variant="danger">Cancel</b-button>
                 <b-button type="submit" variant="primary">Submit</b-button>
             </div>
         </b-form>
@@ -45,6 +45,10 @@
                 })
 
                 e.preventDefault()
+            },
+
+            returnBack() {
+                this.$router.go(-1)
             },
         }
     }

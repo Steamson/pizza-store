@@ -7,7 +7,7 @@
                 </b-col>
 
                 <b-col cols="4" class="d-flex align-items-center justify-content-center">
-                    <router-link :to="{name: 'cart', params: {cart_data: CartGet}}">
+                    <router-link :to="{name: 'cart'}">
                         <div class="cart_info">In cart: {{CartGet.length}}</div>
                     </router-link>
                 </b-col>
@@ -37,13 +37,6 @@
         computed: {
             ...mapGetters(['CartGet', 'UserGet']),
         },
-        // methods: {
-        //     ...mapActions(['ChangeMainCurrency']),
-
-        //     mainCurrencySet(currency) {
-        //         this.ChangeMainCurrency(currency)
-        //     }
-        // },
     }
 </script>
 

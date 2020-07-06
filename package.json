@@ -16,6 +16,7 @@
     "normalize.css": "^8.0.1",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.3.4",
     "vue-the-mask": "^0.11.1",
     "vuex": "^3.5.1"

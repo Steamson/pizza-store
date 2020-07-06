@@ -20,11 +20,17 @@
     export default {
         name: 'Product',
         props: {
-            symbol: '',
-            currency: '',
+            symbol: {
+                type: String,
+                default: ''
+            },
+            currency:  {
+                type: String,
+                default: ''
+            },
             params: {
                 type: Object,
-                default() {return {}}
+                default() { return {} }
             },
         },
         mounted () {
@@ -36,10 +42,7 @@
             },
         },
         computed: {
-            // currencyComputed() {
-                
-            //     return  
-            // }
+            
         },
     }
 </script>

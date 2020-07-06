@@ -6,6 +6,10 @@ export default {
         cart: [],
     },
     mutations: {
+        clearCart(state) {
+            state.cart = []
+        },
+
         updateCart(state, data) {
             let has_product = false
 
@@ -58,17 +62,16 @@ export default {
             commit('increaseCartItem', index)
         },
 
-        CreateOrder({commit}, data) {
+        CreateOrder({commit, dispatch}, data) {
             let order = {
                 cart: data.cart,
                 account: data.uid,
                 name: data.form.name,
                 phone: data.form.phone,
                 address: data.form.address,
+                delivery: data.delivery,
                 time: new Date()
             }
-
-            console.log(order);
 
             axios('https://pizzastore-e062.restdb.io/rest/orders', {
                 method: 'POST',
@@ -81,6 +84,8 @@ export default {
                 json: true
             }).then((response) => {
                 console.log(response.data)
+                commit('clearCart')
+                dispatch('LoadUserOrders', data.uid)
             }).catch((error) => {
                 console.log(error)
             })

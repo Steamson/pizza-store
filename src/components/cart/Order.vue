@@ -4,9 +4,7 @@
             <b>REMEMBER!</b> If you not logged in, we create new account for you. You will need it for check previous orders.
         </b-alert>
 
-        <!-- <b-form @submit="makeOrder" @reset="onReset"> -->
-        <!-- <b-form @submit="makeOrder"> -->
-        <b-form>
+        <b-form @submit="makeOrder">
             <b-form-group label="Name:" label-for="name">
                 <b-form-input
                     id="name"
@@ -41,8 +39,7 @@
             <div class="d-flex justify-content-between">
                 <b-button type="reset" variant="danger">Reset</b-button>
                 <b-button v-if="Object.keys(UserGet).length" variant="outline-primary" @click="takeFromAccount">Take from account</b-button>
-                <!-- <b-button type="submit" variant="success">Submit</b-button> -->
-                <b-button variant="success" @click="makeOrder">Submit</b-button>
+                <b-button type="submit" variant="success">Submit</b-button>
             </div>
         </b-form>
     </div>
@@ -50,9 +47,10 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
-    import {TheMask} from 'vue-the-mask'
+    import { TheMask } from 'vue-the-mask'
 
     export default {
+        name: 'Order',
         data() {
             return {
                 form: {
@@ -66,27 +64,9 @@
             TheMask,
         },
         computed: {
-            ...mapGetters(['UserGet', 'CartGet']),
+            ...mapGetters(['UserGet', 'CartGet', 'DeliveryGet']),
         },
         methods: {
-            // onSubmit(evt) {
-            //     evt.preventDefault()
-            //     alert(JSON.stringify(this.form))
-            // },
-            // onReset(evt) {
-            //     evt.preventDefault()
-            //     // Reset our form values
-            //     this.form.email = ''
-            //     this.form.name = ''
-            //     this.form.food = null
-            //     this.form.checked = []
-            //     // Trick to reset/clear native browser form validation state
-            //     this.show = false
-            //     this.$nextTick(() => {
-            //     this.show = true
-            //     })
-            // },
-
             ...mapActions(['CreateOrder', 'CreateUser']),
 
             makeOrder(e) {
@@ -94,6 +74,7 @@
                     uid: this.UserGet.id,
                     form: this.form,
                     cart: this.CartGet,
+                    delivery: this.DeliveryGet
                 }
 
                 if (Object.keys(this.UserGet).length) {
@@ -101,8 +82,7 @@
                 } else {
                     this.CreateUser(this.form).then((response) => {
                         order_data.uid = response.id
-                        alert(response.user_name)
-
+                        this.$emit('showAttention')
                         this.CreateOrder(order_data)
                     })
                 }

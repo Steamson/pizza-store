@@ -3,14 +3,19 @@ import axios from 'axios'
 export default {
     state: {
         user: {},
+        orders: {},
     },
     mutations: {
         loginUser(state, user) {
             state.user = user;
         },
 
-        logOutUser(state,) {
+        logOutUser(state) {
             state.user = {};
+        },
+
+        ordersSave(state, orders) {
+            state.orders = orders
         },
     },
     actions: {
@@ -18,7 +23,7 @@ export default {
             commit('changeMainCurrency', currency)
         },
 
-        async LoginUser({commit, state}, alias) {
+        async LoginUser({commit, state, dispatch}, alias) {
             state.preloader = true
 
             return await axios('https://pizzastore-e062.restdb.io/rest/accounts', {
@@ -31,7 +36,7 @@ export default {
                 state.preloader = false
                 
                 if (response.data.length) {
-                    let temp_user
+                    let temp_user = {}
 
                     for (let user of response.data) {
                         if (user.alias == alias) {
@@ -41,6 +46,7 @@ export default {
 
                     if (temp_user) {
                         commit('loginUser', temp_user)
+                        dispatch('LoadUserOrders', temp_user.id)
                     }
                 }
             }).catch((error) => {
@@ -69,14 +75,33 @@ export default {
                 json: true
             }).then((response) => {
                 commit('loginUser', response.data)
+                return response.data
             }).catch((error) => {
                 console.log(error)
             })
         },
+
+        LoadUserOrders({commit}, uid) {
+            axios('https://pizzastore-e062.restdb.io/rest/orders?q={"account": ' + uid + '}', {
+                method: 'GET',
+                headers: {
+                    'cache-control': 'no-cache',
+                    'x-apikey': '5f01474ea529a1752c476d7f',
+                },
+            }).then((response) => {
+                commit('ordersSave', response.data)
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
     },
     getters: {
         UserGet: state => {
             return state.user
+        },
+
+        UserOrdersGet: state => {
+            return state.orders
         },
     }
 }
