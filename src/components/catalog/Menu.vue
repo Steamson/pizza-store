@@ -1,6 +1,6 @@
 <template>
     <div class="catalog">
-        <h1 class="mb-3">Menu</h1>
+        <h1 class="mb-3">Online Food Delivery </h1>
 
         <b-row>
             <div class="col-12 col-sm-6 col-md-4" v-for="product in ProductsGet" :key="product.id">
@@ -8,7 +8,7 @@
                     :params="product"
                     :currency="MainCurrencyGet"
                     :symbol="MainCurrencySymbolGet"
-                    v-on:addToCart="addToCart"
+                    @addToCart="addToCart"
                 />
             </div>
         </b-row>

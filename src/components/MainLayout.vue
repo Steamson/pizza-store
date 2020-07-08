@@ -13,17 +13,17 @@
         <div v-if="PreloaderGet" class="preloader">
             <div>
                 <div>
-                    <b-spinner class="m-5" label="Busy" style="width: 3rem; height: 3rem;" type="grow"></b-spinner>
+                    <b-spinner class="m-2" label="Busy" style="width: 3rem; height: 3rem;" type="grow"></b-spinner>
                 </div>
 
                 <div>
-                    <b-spinner class="m-5" label="Busy" style="width: 3rem; height: 3rem;" type="grow"></b-spinner>
-                    <b-spinner class="m-5" label="Busy" style="width: 3rem; height: 3rem;"></b-spinner>
-                    <b-spinner class="m-5" label="Busy" style="width: 3rem; height: 3rem;" type="grow"></b-spinner>
+                    <b-spinner class="m-2" label="Busy" style="width: 3rem; height: 3rem;" type="grow"></b-spinner>
+                    <b-spinner class="m-2" label="Busy" style="width: 3rem; height: 3rem;"></b-spinner>
+                    <b-spinner class="m-2" label="Busy" style="width: 3rem; height: 3rem;" type="grow"></b-spinner>
                 </div>
 
                 <div>
-                    <b-spinner class="m-5" label="Busy" style="width: 3rem; height: 3rem;" type="grow"></b-spinner>
+                    <b-spinner class="m-2" label="Busy" style="width: 3rem; height: 3rem;" type="grow"></b-spinner>
                 </div>
             </div>
         </div>

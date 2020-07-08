@@ -20,9 +20,9 @@
                             <b-container>
                                 <b-row class="orders__header">
                                     <b-col cols="5" md="4" class="text-left">Product</b-col>
-                                    <b-col cols="4" md="3" class="d-flex justify-content-end">Cost</b-col>
+                                    <b-col cols="4" md="3" class="d-flex justify-content-end">Price</b-col>
                                     <b-col cols="3" md="2" class="text-right">Count</b-col>
-                                    <b-col cols="4" md="3" class="d-none d-md-flex text-right">Total</b-col>
+                                    <b-col cols="4" md="3" class="d-none d-md-flex justify-content-end">Cost</b-col>
                                 </b-row>
 
                                 <b-row class="orders__item" v-for="(product, index) in order.cart" :key="index">
@@ -44,8 +44,32 @@
                                     </b-col>
                                 </b-row>
 
-                                <b-row>
+                                <b-row class="orders__total">
+                                    <b-col cols="9" class="text-right">
+                                        <h5>Delivery:</h5>
+                                    </b-col>
+                                    <b-col  cols="3">
+                                        <div class="orders__total__result d-flex justify-content-end">
+                                            <div
+                                                v-for="(symbol, currency) in AllCurrenciesGet"
+                                                :key="currency"
+                                                v-html="(parseFloat(order.delivery['delivery_' + currency.toLowerCase()]).toFixed(2)) + '<b>' + symbol + '</b>'">
+                                            </div>
+                                        </div>
+                                    </b-col>
 
+                                    <b-col cols="9" class="text-right">
+                                        <h5>Total:</h5>
+                                    </b-col>
+                                    <b-col  cols="3">
+                                        <div class="orders__total__result d-flex justify-content-end">
+                                            <div
+                                                v-for="(symbol, currency) in AllCurrenciesGet"
+                                                :key="currency"
+                                                v-html="(parseFloat(totalCost(order)['price_' + currency.toLowerCase()]).toFixed(2)) + '<b>' + symbol + '</b>'">
+                                            </div>
+                                        </div>
+                                    </b-col>
                                 </b-row>
                             </b-container>
                         </b-card-body>
@@ -68,6 +92,25 @@
         methods: {
             ...mapActions(['LogOutUser']),
 
+            totalCost(order) {
+                let total_cost = {
+                    price_usd: 0.00,
+                    price_eur: 0.00,
+                }
+
+                // Cart cost
+                order.cart.map(item => {
+                    total_cost.price_usd = ((parseFloat(item.price_usd) * item.quantity) + parseFloat(total_cost.price_usd)).toFixed(2)
+                    total_cost.price_eur = ((parseFloat(item.price_eur) * item.quantity) + parseFloat(total_cost.price_eur)).toFixed(2)
+                })
+
+                // Add delivery
+                total_cost.price_usd = (parseFloat(order.delivery.delivery_usd) + parseFloat(total_cost.price_usd)).toFixed(2)
+                total_cost.price_eur = (parseFloat(order.delivery.delivery_eur) + parseFloat(total_cost.price_usd)).toFixed(2)
+
+                return total_cost
+            },
+
             logOutUser() {
                 this.LogOutUser()
             },
@@ -78,10 +121,12 @@
 <style lang="scss" scoped>
     .account {
         .orders {
-            &__item {
+            &__item,
+            &__total {
                 color: $black_odd;
 
-                &__price {
+                &__price,
+                &__result {
                     > div {
                         $offset: 8px;
 
@@ -102,6 +147,10 @@
                         }
                     }
                 }
+            }
+
+            &__total {
+                border-top: 1px solid $black_odd;
             }
         }
     }

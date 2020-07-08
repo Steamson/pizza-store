@@ -24,7 +24,7 @@ export default {
 
             if (!has_product) {
                 Vue.delete(data, '_id')
-
+                data.quantity = 1
                 state.cart.push(data)
             }
         },
@@ -94,6 +94,15 @@ export default {
     getters: {
         CartGet: state => {
             return state.cart
+        },
+
+        CartCountAll: state => {
+            let all_count = 0
+            state.cart.map(product => {
+                all_count += product.quantity
+            })
+            
+            return all_count
         },
     }
 }

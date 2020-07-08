@@ -1,19 +1,17 @@
 <template>
     <div class="footer py-3">
         <b-container class="text-center">
-            <router-link class="logo_outer" :to="{name: 'home'}">
-                <div class="logo">
-                    <span class="logo__head">TOKYO</span>
-                    <span class="logo__sub">DELIVERY</span>
-                </div>
-            </router-link>
+            <Logo/>
         </b-container>
     </div>
 </template>
 
 <script>
+    import Logo from './Logo';
     export default {
-        
+        components: {
+            Logo,
+        },
     }
 </script>
 
