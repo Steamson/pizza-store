@@ -29,6 +29,15 @@ export default {
             }
         },
 
+        checkQuantity(state, index) {
+            let value = state.cart[index].quantity
+            
+            if (value < 1 || !value) { value = 1 }
+            else if (value > 99) { value = 99 }
+
+            state.cart[index].quantity = value
+        },
+
         removeCartItem(state, index) {
             state.cart.splice(index, 1)
         },
@@ -50,6 +59,10 @@ export default {
             commit('updateCart', product)
         },
 
+        CheckQuantity({commit}, index) {
+            commit('checkQuantity', index)
+        },
+
         RemoveFromCart({commit}, index) {
             commit('removeCartItem', index)
         },
@@ -62,7 +75,7 @@ export default {
             commit('increaseCartItem', index)
         },
 
-        CreateOrder({commit, dispatch}, data) {
+        async CreateOrder({commit, dispatch}, data) {
             let order = {
                 cart: data.cart,
                 account: data.uid,
@@ -73,7 +86,7 @@ export default {
                 time: new Date()
             }
 
-            axios('https://pizzastore-e062.restdb.io/rest/orders', {
+            await axios('https://pizzastore-e062.restdb.io/rest/orders', {
                 method: 'POST',
                 headers: {
                     'cache-control': 'no-cache',
@@ -99,7 +112,7 @@ export default {
         CartCountAll: state => {
             let all_count = 0
             state.cart.map(product => {
-                all_count += product.quantity
+                all_count += parseInt(product.quantity)
             })
             
             return all_count

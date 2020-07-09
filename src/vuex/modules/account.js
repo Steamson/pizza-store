@@ -82,17 +82,19 @@ export default {
         },
 
         LoadUserOrders({commit}, uid) {
-            axios('https://pizzastore-e062.restdb.io/rest/orders?q={"account": ' + uid + '}', {
-                method: 'GET',
-                headers: {
-                    'cache-control': 'no-cache',
-                    'x-apikey': '5f01474ea529a1752c476d7f',
-                },
-            }).then((response) => {
-                commit('ordersSave', response.data)
-            }).catch((error) => {
-                console.log(error)
-            })
+            if (uid) {
+                axios('https://pizzastore-e062.restdb.io/rest/orders?q={"account": ' + uid + '}&sort=time&dir=-1', {
+                    method: 'GET',
+                    headers: {
+                        'cache-control': 'no-cache',
+                        'x-apikey': '5f01474ea529a1752c476d7f',
+                    },
+                }).then((response) => {
+                    commit('ordersSave', response.data)
+                }).catch((error) => {
+                    console.log(error)
+                })
+            }
         }
     },
     getters: {

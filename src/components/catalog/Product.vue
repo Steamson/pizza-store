@@ -1,17 +1,17 @@
 <template>
-    <div class="product">
+    <div class="product d-flex align-items-stretch">
         <b-card
+            img-top
             tag="div"
             bg-variant="dark"
             :header="params.name"
             class="text-center my-3"
             text-variant="white"
-            img-top
             :img-src="'https://pizzastore-e062.restdb.io/media/' + params.image[0] + '?s=w'"
         >
+            <b-card-title>{{params['price_' + currency.toLowerCase()].toFixed(2)}}{{symbol}}</b-card-title>
             <b-card-text>{{params.description}}</b-card-text>
-            <b-card-title>Price: {{params['price_' + currency.toLowerCase()].toFixed(2)}}{{symbol}}</b-card-title>
-            <b-button href="#" variant="primary" @click="addToCart">Add to cart</b-button>
+            <b-button href="#" class="button button_red w-100" @click="addToCart">Add to cart</b-button>
         </b-card>
     </div>
 </template>
@@ -49,6 +49,26 @@
 
 <style lang="scss" scoped>
     .product {
+        &/deep/ {
+            @include media-breakpoint-down(sm) {
+                max-width: 300px;
+            }
 
+            .card {
+                &-header {
+                    background-color: $venetian_red;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                }
+
+                &-body {
+                    background-color: $black_odd;
+                }
+
+                &-title {
+
+                }
+            }
+        }
     }
 </style>

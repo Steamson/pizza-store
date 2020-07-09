@@ -33,6 +33,10 @@
         &:hover {
             background-color: $old_rose;
         }
+
+        &:active {
+            background-break: $free_speech_red;
+        }
         
         &__head {
             font-weight: bold;

@@ -36,6 +36,13 @@
                     &-toggle {
                         background-color: $white_smoke;
                         color: $venetian_red;
+
+                        &:active {
+                            background-color: $free_speech_red;
+                            border-color: $white_smoke;
+                            box-shadow: none;
+                            outline: none;
+                        }
                     }
                 }
             }
@@ -45,9 +52,18 @@
             .dropdown {
                 &-toggle {
                     border: 1px solid $white_smoke;
+                    transition: $transition_small;
                     background: $venetian_red;
                     font-weight: 600;
+                    box-shadow: none;
                     outline: none;
+
+                    &.btn-secondary:not(:disabled):not(.disabled):active {
+                        background-color: $free_speech_red;
+                        border-color: $white_smoke;
+                        box-shadow: none;
+                        outline: none;
+                    }
 
                     &::after {
                         position: relative;

@@ -4,3 +4,58 @@
 body {
     background-color: $white_smoke;
 }
+
+.button {
+    border-radius: 0px 5px 0px 5px;
+
+    &:focus,
+    &:active {
+        box-shadow: none;
+        outline: none;
+    }
+    
+    &_red {
+        background-color: $venetian_red;
+        transition: $transition_small;
+        border-color: $venetian_red;
+    
+        &:hover {
+            background-color: $old_rose;
+            border-color: $old_rose;
+        }
+        
+        &.btn-secondary:not(:disabled):not(.disabled):active {
+            background-color: $free_speech_red;
+            border-color: $free_speech_red;
+        }
+
+        &:focus {
+            background-color: $venetian_red;
+            border-color: $venetian_red;
+            box-shadow: none;
+            outline: none;
+        }
+    }
+    
+    &_dark {
+        background-color: $black_odd;
+        transition: $transition_small;
+        border-color: $black_odd;
+    
+        &:hover {
+            background-color: lighten($black_odd, 20%);
+        }
+    
+        &.btn-secondary:not(:disabled):not(.disabled):active {
+            background-color: lighten($black_odd, 10%);
+            border-color: lighten($black_odd, 10%);
+        }
+
+        &:focus {
+            background-color: $black_odd;
+            border-color: $black_odd;
+            box-shadow: none;
+            outline: none;
+        }
+    }
+}

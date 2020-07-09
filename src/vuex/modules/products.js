@@ -10,8 +10,8 @@ export default {
         },
     },
     actions: {
-        GetProductsFromApi({commit}) {
-            axios('https://pizzastore-e062.restdb.io/rest/products', {
+        async GetProductsFromApi({commit}) {
+            await axios('https://pizzastore-e062.restdb.io/rest/products', {
                 method: 'GET',
                 headers: {
                     'cache-control': 'no-cache',
@@ -19,7 +19,7 @@ export default {
                 },
             }).then((response) => {
                 commit('updateProducts', response.data)
-                return response
+                return response.data
             }).catch((error) => {
                 console.log(error)
                 return error

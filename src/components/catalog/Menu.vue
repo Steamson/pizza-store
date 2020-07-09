@@ -3,7 +3,7 @@
         <h1 class="mb-3">Online Food Delivery </h1>
 
         <b-row>
-            <div class="col-12 col-sm-6 col-md-4" v-for="product in ProductsGet" :key="product.id">
+            <div class="col-12 col-sm-6 col-md-4 d-flex justify-content-center" v-for="product in ProductsGet" :key="product.id">
                 <Product
                     :params="product"
                     :currency="MainCurrencyGet"
@@ -30,13 +30,18 @@
             Product,
         },
         mounted() {
-            this.GetProductsFromApi()
+            this.PreloaderShow(true)
+            this.GetProductsFromApi().then((result) => {
+                this.PreloaderShow(false)
+            }).catch((err) => {
+                console.log(err);
+            });
         },
         computed: {
             ...mapGetters(['ProductsGet', 'CartGet', 'MainCurrencyGet', 'MainCurrencySymbolGet']),
         },
         methods: {
-            ...mapActions(['GetProductsFromApi', 'AddNewItemToCart']),
+            ...mapActions(['GetProductsFromApi', 'AddNewItemToCart', 'PreloaderShow']),
 
             addToCart(data) {
                 this.AddNewItemToCart(data)

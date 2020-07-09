@@ -2,22 +2,23 @@
     <div class="cart">
         <h1 class="mb-3">CART</h1>
 
-        <h2 v-if="!CartGet.length">There are no products in your cart</h2>
+        <h4 v-if="!CartGet.length">There are no products in your cart</h4>
 
         <CartItem
             v-for="(item, index) in CartGet"
             :key="index"
             :item="item"
+            class="cart__item"
             @deleteFromCart="deleteFromCart(index)"
             @decreaseCartItem="decreaseItem(index)"
             @increaseCartItem="increaseItem(index)"
         ></CartItem>
 
         <div v-if="CartGet.length">
-            <div class="cart__total mt-4">
-                <span>Cart total: <mark>{{cartTottalCost + MainCurrencySymbolGet}}</mark></span>
-                <span>Delivery price: <mark>{{deliveryCost + MainCurrencySymbolGet}}</mark></span>
-                <span>Order cost: <mark>{{orderCost + MainCurrencySymbolGet}}</mark></span>
+            <div class="cart__total mt-4 d-flex flex-column flex-sm-row justify-content-between">
+                <h5>Cart total: <b>{{cartTottalCost + MainCurrencySymbolGet}}</b></h5>
+                <h5>Delivery price: <b>{{deliveryCost + MainCurrencySymbolGet}}</b></h5>
+                <h5>Order cost: <b>{{orderCost + MainCurrencySymbolGet}}</b></h5>
             </div>
 
             <div class="mt-5">
@@ -111,12 +112,10 @@
 
 <style lang="scss" scoped>
     .cart {
-        &_item {
+        &__item  {
+            border-bottom: 1px solid $black_odd;
+            padding-bottom: 10px;
             margin-bottom: 10px;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
         }
     }
 </style>

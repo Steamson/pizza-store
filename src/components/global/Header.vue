@@ -8,7 +8,6 @@
                 
                 <b-col cols="8" class="d-flex align-items-center justify-content-end">
                     <router-link :to="{name: 'cart'}" class="header__button mr-4">
-                        <!-- <div class="cart_info">In cart: {{CartGet.length}}</div> -->
                         <div v-if="CartCountAll > 0" class="cart_count"><span>{{CartCountAll}}</span></div>
                         <b-icon v-if="CartGet.length" icon="basket3-fill"></b-icon>
                         <b-icon v-else icon="basket3"></b-icon>

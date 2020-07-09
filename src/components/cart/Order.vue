@@ -1,7 +1,8 @@
 <template>
     <div>
         <b-alert v-if="!Object.keys(UserGet).length" show variant="warning">
-            <b>REMEMBER!</b> If you not logged in, we create new account for you. You will need it for check previous orders.
+            <b>REMEMBER!</b><br/>
+            If you do not logged in, we will create new account for you. You will need it for check previous orders.
         </b-alert>
 
         <b-form @submit="makeOrder">
@@ -21,7 +22,8 @@
                     required
                     placeholder="Enter name"
                     type="tel"
-                    mask="+# (###) ###-##-##"
+                    masked="true"
+                    v-mask="'+# (###) ###-##-##'"
                 ></b-form-input>
             </b-form-group>
 
@@ -36,18 +38,17 @@
                 ></b-form-input>
             </b-form-group>
 
-            <div class="d-flex justify-content-between">
-                <b-button type="reset" variant="danger">Reset</b-button>
-                <b-button v-if="Object.keys(UserGet).length" variant="outline-primary" @click="takeFromAccount">Take from account</b-button>
-                <b-button type="submit" variant="success">Submit</b-button>
+            <div class="d-flex justify-content-end mt-4" :class="{'justify-content-between': Object.keys(UserGet).length}">
+                <b-button v-if="Object.keys(UserGet).length" class="button button_red" @click="takeFromAccount">Take from account</b-button>
+                <b-button type="submit" class="button button_dark">Submit</b-button>
             </div>
         </b-form>
     </div>
 </template>
 
 <script>
+    import { required, minLength, between } from 'vuelidate/lib/validators'
     import { mapGetters, mapActions } from 'vuex';
-    import { TheMask } from 'vue-the-mask'
 
     export default {
         name: 'Order',
@@ -61,15 +62,23 @@
             }
         },
         components: {
-            TheMask,
+            
         },
         computed: {
             ...mapGetters(['UserGet', 'CartGet', 'DeliveryGet']),
         },
         methods: {
-            ...mapActions(['CreateOrder', 'CreateUser']),
+            ...mapActions(['CreateOrder', 'CreateUser', 'PreloaderShow']),
 
             makeOrder(e) {
+                if (this.form.phone.length < 18) {
+                    this.form.phone = ''
+
+                    e.preventDefault()
+                    return false
+                }
+                this.PreloaderShow(true)
+
                 let order_data = {
                     uid: this.UserGet.id,
                     form: this.form,
@@ -78,12 +87,21 @@
                 }
 
                 if (Object.keys(this.UserGet).length) {
-                    this.CreateOrder(order_data)
+                    this.CreateOrder(order_data).then((result) => {
+                        this.PreloaderShow(false)
+                    }).catch((error) => {
+                        console.log(error)
+                    })
                 } else {
                     this.CreateUser(this.form).then((response) => {
                         order_data.uid = response.id
                         this.$emit('showAttention')
-                        this.CreateOrder(order_data)
+                        this.CreateOrder(order_data).then((result) => {
+                            this.$router.replace({name: 'account'})
+                            this.PreloaderShow(false)
+                        }).catch((error) => {
+                            console.log(error);
+                        })
                     })
                 }
                 
