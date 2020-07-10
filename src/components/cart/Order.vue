@@ -10,7 +10,7 @@
                 <b-form-input
                     :class="{'is-invalid': $v.form.name.$error}"
                     v-model.trim="$v.form.name.$model"
-                    placeholder="Enter name"
+                    placeholder="Enter your name"
                     type="text"
                 ></b-form-input>
             </b-form-group>
@@ -20,7 +20,7 @@
                     :class="{'is-invalid': $v.form.phone.$error}"
                     v-model.trim="$v.form.phone.$model"
                     id="phone"
-                    placeholder="Enter name"
+                    placeholder="Enter your phone"
                     type="tel"
                     masked="true"
                     v-mask="'+# (###) ###-##-##'"
@@ -32,7 +32,7 @@
                     :class="{'is-invalid': $v.form.address.$error}"
                     v-model.trim="$v.form.address.$model"
                     id="address"
-                    placeholder="Enter address"
+                    placeholder="Enter your address"
                     type="tel"
                     mask="+# (###) ###-##-##"
                 ></b-form-input>
