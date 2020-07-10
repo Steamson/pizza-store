@@ -34,6 +34,7 @@
     import Logo from './Logo';
 
     export default {
+        name: 'Header',
         components: {
             CurrencySwitch,
             Logo,

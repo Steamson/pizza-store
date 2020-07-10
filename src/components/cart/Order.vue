@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import { required, minLength, between } from 'vuelidate/lib/validators'
+    import { required, minLength, between } from 'vuelidate/lib/validators';
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
@@ -60,9 +60,6 @@
                     address: '',
                 }
             }
-        },
-        components: {
-            
         },
         computed: {
             ...mapGetters(['UserGet', 'CartGet', 'DeliveryGet']),
@@ -100,7 +97,7 @@
                             this.$router.replace({name: 'account'})
                             this.PreloaderShow(false)
                         }).catch((error) => {
-                            console.log(error);
+                            console.log(error)
                         })
                     })
                 }

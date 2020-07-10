@@ -42,6 +42,7 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    
     import CartItem from './CartItem';
     import Order from '../cart/Order';
 

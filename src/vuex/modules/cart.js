@@ -96,7 +96,6 @@ export default {
                 data: order,
                 json: true
             }).then((response) => {
-                console.log(response.data)
                 commit('clearCart')
                 dispatch('LoadUserOrders', data.uid)
             }).catch((error) => {

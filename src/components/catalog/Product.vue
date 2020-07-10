@@ -41,9 +41,6 @@
                 this.$emit('addToCart', this.params)
             },
         },
-        computed: {
-            
-        },
     }
 </script>
 
@@ -63,10 +60,6 @@
 
                 &-body {
                     background-color: $black_odd;
-                }
-
-                &-title {
-
                 }
             }
         }

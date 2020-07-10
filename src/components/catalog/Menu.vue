@@ -16,16 +16,12 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex'
-    import Product from './Product'
+    import { mapGetters, mapActions } from 'vuex';
+    
+    import Product from './Product';
 
     export default {
         name: 'Menu',
-        data() {
-            return {
-                
-            }
-        },
         components: {
             Product,
         },
@@ -33,8 +29,8 @@
             this.PreloaderShow(true)
             this.GetProductsFromApi().then((result) => {
                 this.PreloaderShow(false)
-            }).catch((err) => {
-                console.log(err);
+            }).catch((error) => {
+                console.log(error)
             });
         },
         computed: {

@@ -13,6 +13,7 @@
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
+        name: 'CurrencySwitch',
         computed: {
             ...mapGetters(['MainCurrencyGet', 'AllCurrenciesGet']),
         },

@@ -28,10 +28,11 @@
 </template>
 
 <script>
-    import { required, minLength, between } from 'vuelidate/lib/validators'
+    import { required, minLength, between } from 'vuelidate/lib/validators';
     import { mapActions, mapGetters } from 'vuex';
 
     export default {
+        name: 'LiginForm',
         data() {
             return {
                 alias: '',

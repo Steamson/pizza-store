@@ -32,11 +32,12 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    
     import Header from './global/Header';
     import Footer from './global/Footer';
 
     export default {
-        name: 'main-layout',
+        name: 'MainLayout',
         components: {
             Header,
             Footer,

@@ -35,6 +35,7 @@ export default {
         },
 
         PreloaderShow({commit}, show) {
+            console.log('object');
             commit('preloaderShow', show)
         },
 

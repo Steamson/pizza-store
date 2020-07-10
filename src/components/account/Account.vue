@@ -93,6 +93,7 @@
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
+        name: 'UserAccount',
         computed: {
             ...mapGetters(['UserGet', 'UserOrdersGet', 'AllCurrenciesGet']),
         },
