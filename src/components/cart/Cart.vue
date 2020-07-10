@@ -30,11 +30,11 @@
             :ok-only="true"
             centered
             :visible="attention"
-            header-bg-variant="danger"
             id="attention"
             title="ATTENTION!"
+            content-class="modal_warning"
         >
-            <div class="mb-3">Remeber this <b>Login</b> for future login:</div>
+            <div class="mb-3">Remeber this <b>Login</b> for future sign in:</div>
             <h4>{{UserGet.alias}}</h4>
         </b-modal>
     </div>

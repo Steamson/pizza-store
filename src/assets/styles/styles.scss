@@ -59,3 +59,14 @@ body {
         }
     }
 }
+
+// .modal-header bg-danger
+
+.modal_warning {
+    .modal {
+        &-header {
+            background-color: $venetian_red;
+            color: $white_smoke;
+        }
+    }
+}

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <b-alert v-if="!Object.keys(UserGet).length" show variant="warning">
+    <div class="order">
+        <b-alert v-if="!Object.keys(UserGet).length" show class="warning">
             <b>REMEMBER!</b><br/>
             If you do not logged in, we will create new account for you. You will need it for check previous orders.
         </b-alert>
@@ -129,5 +129,12 @@
 </script>
 
 <style lang="scss" scoped>
-
+    .order {
+        &/deep/ {
+            .warning {
+                background-color: $venetian_red;
+                color: $white_smoke;
+            }
+        }
+    }
 </style>
