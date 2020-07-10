@@ -60,6 +60,12 @@
 
                 &-body {
                     background-color: $black_odd;
+                    flex-direction: column;
+                    display: flex;
+                }
+
+                &-text {
+                    flex-grow: 1;
                 }
             }
         }
