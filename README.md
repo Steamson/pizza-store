@@ -1,5 +1,7 @@
 # pizza-shop
 
+Stack: Vue, Vuex, BootstrapVue / Bootstrap 4, Vuelidate, Axios (for query with https://restdb.io)
+
 ## Project setup
 ```
 npm install
@@ -13,11 +15,6 @@ npm run serve
 ### Compiles and minifies for production
 ```
 npm run build
-```
-
-### Start DB on port 4000
-```
-json-server -p 4000 db.json
 ```
 
 ### Customize configuration
