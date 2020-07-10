@@ -5,21 +5,21 @@
             If you do not logged in, we will create new account for you. You will need it for check previous orders.
         </b-alert>
 
-        <b-form @submit="makeOrder">
+        <b-form @submit.stop.prevent="makeOrder" novalidate>
             <b-form-group label="Name:" label-for="name">
                 <b-form-input
-                    id="name"
-                    v-model="form.name"
-                    required
+                    :class="{'is-invalid': $v.form.name.$error}"
+                    v-model.trim="$v.form.name.$model"
                     placeholder="Enter name"
+                    type="text"
                 ></b-form-input>
             </b-form-group>
 
             <b-form-group label="Phone number:" label-for="phone">
                 <b-form-input
+                    :class="{'is-invalid': $v.form.phone.$error}"
+                    v-model.trim="$v.form.phone.$model"
                     id="phone"
-                    v-model="form.phone"
-                    required
                     placeholder="Enter name"
                     type="tel"
                     masked="true"
@@ -29,9 +29,9 @@
 
             <b-form-group label="Address for delivery:" label-for="address">
                 <b-form-input
+                    :class="{'is-invalid': $v.form.address.$error}"
+                    v-model.trim="$v.form.address.$model"
                     id="address"
-                    v-model="form.address"
-                    required
                     placeholder="Enter address"
                     type="tel"
                     mask="+# (###) ###-##-##"
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import { required, minLength, between } from 'vuelidate/lib/validators';
+    import { required, minLength } from 'vuelidate/lib/validators';
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
@@ -61,6 +61,23 @@
                 }
             }
         },
+        validations: {
+            form: {
+                name: {
+                    required,
+                    minLength: minLength(1)
+                },
+
+                phone: {
+                    required,
+                    minLength: minLength(18)
+                },
+                address: {
+                    required,
+                    minLength: minLength(1)
+                },
+            },
+        },
         computed: {
             ...mapGetters(['UserGet', 'CartGet', 'DeliveryGet']),
         },
@@ -68,38 +85,35 @@
             ...mapActions(['CreateOrder', 'CreateUser', 'PreloaderShow']),
 
             makeOrder(e) {
-                if (this.form.phone.length < 18) {
-                    this.form.phone = ''
+                this.$v.$touch()
+                if (!this.$v.$invalid) {
+                    this.PreloaderShow(true)
 
-                    e.preventDefault()
-                    return false
-                }
-                this.PreloaderShow(true)
+                    let order_data = {
+                        uid: this.UserGet.id,
+                        form: this.form,
+                        cart: this.CartGet,
+                        delivery: this.DeliveryGet
+                    }
 
-                let order_data = {
-                    uid: this.UserGet.id,
-                    form: this.form,
-                    cart: this.CartGet,
-                    delivery: this.DeliveryGet
-                }
-
-                if (Object.keys(this.UserGet).length) {
-                    this.CreateOrder(order_data).then((result) => {
-                        this.PreloaderShow(false)
-                    }).catch((error) => {
-                        console.log(error)
-                    })
-                } else {
-                    this.CreateUser(this.form).then((response) => {
-                        order_data.uid = response.id
-                        this.$emit('showAttention')
+                    if (Object.keys(this.UserGet).length) {
                         this.CreateOrder(order_data).then((result) => {
-                            this.$router.replace({name: 'account'})
                             this.PreloaderShow(false)
                         }).catch((error) => {
                             console.log(error)
                         })
-                    })
+                    } else {
+                        this.CreateUser(this.form).then((response) => {
+                            order_data.uid = response.id
+                            this.$emit('showAttention')
+                            this.CreateOrder(order_data).then((result) => {
+                                this.$router.replace({name: 'account'})
+                                this.PreloaderShow(false)
+                            }).catch((error) => {
+                                console.log(error)
+                            })
+                        })
+                    }
                 }
                 
                 e.preventDefault()

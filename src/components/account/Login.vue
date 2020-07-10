@@ -9,10 +9,10 @@
                 class="login__label"
             >
                 <b-form-input
-                    :class="{'is-invalid': $v.alias.$invalid}"
+                    :class="{'is-invalid': $v.alias.$error}"
+                    v-model.trim="$v.alias.$model"
                     id="account"
                     type="text"
-                    v-model.trim="$v.alias.$model"
                     class="login__input"
                     placeholder="Enter account name"
                 ></b-form-input>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import { required, minLength, between } from 'vuelidate/lib/validators';
+    import { required, minLength } from 'vuelidate/lib/validators';
     import { mapActions, mapGetters } from 'vuex';
 
     export default {
